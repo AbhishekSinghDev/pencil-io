@@ -7,6 +7,8 @@ import logo from "@/public/icons/logo-1.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import MobileNavigation from "./MobileNavigation";
+import { ModeToggle } from "./DarkmodeToggle";
+import { useAuth } from "@/components/context/AuthenticationContext";
 
 interface HeaderProps {
   showLinks?: boolean;
@@ -14,6 +16,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
+  const { token } = useAuth();
+
   return (
     <nav className="p-4">
       <div className="flex justify-between items-center max-w-screen-xl mx-auto px-6 my-5">
@@ -71,10 +75,13 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
 
         {showTryButton && (
           <div className="items-center justify-center gap-2 hidden md:flex">
-            <Button variant="outline" asChild size="sm">
-              <Link href="/login">Log in</Link>
-            </Button>
+            {!token && (
+              <Button variant="outline" asChild size="sm">
+                <Link href="/login">Log in</Link>
+              </Button>
+            )}
             <Button size="sm">Try Pencil -{">"}</Button>
+            <ModeToggle />
           </div>
         )}
       </div>

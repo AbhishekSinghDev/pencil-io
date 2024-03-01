@@ -21,7 +21,7 @@ const Main = () => {
   }
 
   return (
-    <section className="absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+    <section className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] h-fit">
       <Header showLinks={true} showTryButton={true} />
       <section className="h-[50lvh] flex flex-col items-center justify-center space-y-6 max-w-screen-xl mx-auto">
         <div className="text-center">

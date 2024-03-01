@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthenticationProvider } from "@/components/context/AuthenticationContext";
-
-import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/components/context/theme-provider";
 
 const mono = JetBrains_Mono({ subsets: ["latin"] });
@@ -19,14 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={mono.className}>
-        <AuthenticationProvider>
-          <ThemeProvider attribute="class" defaultTheme="system">
-            <Toaster />
-            {children}
-          </ThemeProvider>
-        </AuthenticationProvider>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <AuthenticationProvider>{children}</AuthenticationProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
