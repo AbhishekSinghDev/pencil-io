@@ -6,7 +6,7 @@ export interface UserInterface extends Document {
   createdAt: Date;
   username: string;
   email: string;
-  teams: TeamInterface;
+  teams: TeamInterface[];
 }
 
 const UserSchema: mongoose.Schema = new mongoose.Schema(

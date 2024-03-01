@@ -15,10 +15,10 @@ const Main = () => {
   const { token } = useAuth();
   const router = useRouter();
 
-  if (token) {
-    router.push("/dashboard");
-    return;
-  }
+  // if (token) {
+  //   router.push("/dashboard");
+  //   return;
+  // }
 
   return (
     <section className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] h-fit">
