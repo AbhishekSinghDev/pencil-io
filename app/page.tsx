@@ -32,8 +32,8 @@ const Main = () => {
         </div>
         <div className="text-center">
           <p className="px-10 text-sm sm:text-base">
-            All-in-one mardown editor, collaborative canvas, and diagram-as-code
-            builder
+            All-in-one markdown editor, collaborative canvas, and
+            diagram-as-code builder
           </p>
         </div>
 

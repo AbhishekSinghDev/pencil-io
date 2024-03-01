@@ -1,6 +1,7 @@
 import connectToDatabase from "@/db/connectDatabase";
 import User from "@/db/models/user.model";
 import { handleApiError } from "@/lib/error";
+import generateToken from "@/lib/jwt/generateToken";
 
 export const POST = async (req: Request) => {
   const body = await req.json();
@@ -54,12 +55,14 @@ export const POST = async (req: Request) => {
     });
 
     const user = await newUser.save();
+    const token = generateToken(user);
 
     return new Response(
       JSON.stringify({
         success: true,
         message: "user created successfully",
         user: user,
+        token: token,
       }),
       { status: 201 }
     );

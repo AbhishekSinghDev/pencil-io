@@ -18,6 +18,7 @@ import Link from "next/link";
 import { signupFormSchema } from "@/lib/form-schemas/signup.schema";
 import Header from "@/components/shared/landing_components/Header";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const form = useForm<z.infer<typeof signupFormSchema>>({
@@ -30,12 +31,11 @@ const Signup = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
-    // console.log(values);
-
     try {
       const { data } = await axios.post("api/v1/auth", values);
-      console.log(data);
-    } catch (err) {
+
+      toast("wow");
+    } catch (err: any) {
       console.log(err);
     }
   };
