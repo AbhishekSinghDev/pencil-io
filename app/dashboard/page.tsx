@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
+import DashboardNavbar from "@/components/shared/dashboard_components/DashboardNavbar";
+import FileTable from "@/components/shared/dashboard_components/FileTable";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -63,13 +65,17 @@ const Dashboard = () => {
 
   return (
     <section className="h-full w-full">
-      <div className="flex border h-screen w-full">
-        <div className="border w-[17vw]">
+      <div className="flex h-screen w-full">
+        <div className="border w-[17vw] hidden lg:block">
           <Sidebar user={user} />
         </div>
-        <div className="border w-[83vw]">
-          <div>top nav</div>
-          <div>contents</div>
+        <div className="lg:w-[83vw] w-full">
+          <div className="w-full">
+            <DashboardNavbar />
+          </div>
+          <div className="w-full">
+            <FileTable />
+          </div>
         </div>
       </div>
     </section>

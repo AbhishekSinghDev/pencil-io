@@ -5,6 +5,7 @@ export interface TeamInterface extends Document {
   _id: string;
   name: string;
   createdAt: Date;
+  updatedAt: Date;
   owner: string;
   projects: ProjectInterface[];
 }
