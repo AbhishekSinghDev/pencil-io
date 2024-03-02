@@ -1,4 +1,5 @@
 import connectToDatabase from "@/db/connectDatabase";
+import Team from "@/db/models/team.model";
 import User from "@/db/models/user.model";
 import { handleApiError } from "@/lib/error";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -10,31 +11,47 @@ export const POST = async (req: Request) => {
     return new Response(
       JSON.stringify({
         success: false,
-        message: "please login first to access dashboard",
+        message: "please login first to create team",
       })
     );
   }
 
-  try {
-    await connectToDatabase();
+  const body = await req.json();
+  const { name } = body;
 
+  try {
     const JWT_SECRET_KEY = String(process.env.JWT_SECRET_KEY) || "";
     const result = jwt.verify(token, JWT_SECRET_KEY);
 
     const result_out = result as JwtPayload;
     if (result) {
-      delete result_out.user.password;
-      const userid = result_out.user._id;
+      const user = result_out.user;
+      await connectToDatabase();
 
-      const user = await User.findById(userid).populate("teams");
+      const newTeam = new Team({
+        name: name,
+        owner: user._id,
+      });
+
+      const team = await newTeam.save();
+      const teams = await Team.find({ owner: user._id }).populate("projects");
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          $push: { teams: team._id },
+        },
+        { new: true }
+      );
 
       return new Response(
         JSON.stringify({
           success: true,
-          message: "authorized user",
-          user: user,
+          message: "team created",
+          team: teams,
         }),
-        { status: 200 }
+        {
+          status: 201,
+        }
       );
     }
 

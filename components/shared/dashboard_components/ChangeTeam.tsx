@@ -1,21 +1,14 @@
 import React from "react";
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import User, { UserInterface } from "@/db/models/user.model";
+import { UserInterface } from "@/db/models/user.model";
 
 import DownArrowIcon from "@/public/icons/down-arrow.svg";
 import Logo from "@/public/icons/logo-1.svg";
@@ -27,17 +20,20 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TeamInterface } from "@/db/models/team.model";
 import CreateTeamDialog from "./CreateTeamDialog";
+import { useDashboard } from "@/components/context/DashboardContext";
 
 interface ChangeTeamProps {
   user: UserInterface | undefined;
 }
 
 const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
+  const { setSelectedTeam, selectedTeam, teams } = useDashboard();
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer bg-slate-200 hover:bg-slate-100 w-fit px-4 py-2 rounded-md">
+          <div className="cursor-pointer bg-slate-200 hover:bg-slate-100 w-full py-2 rounded-md">
             <div className="flex items-center justify-center gap-3">
               <Image
                 src={Logo}
@@ -47,7 +43,7 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
                 className="h-6 w-6"
               />
               <p className="font-bold text-base line-clamp-1">
-                {user?.username}&apos;s Team
+                {selectedTeam?.name}&apos;s Team
               </p>
               <Image
                 src={DownArrowIcon}
@@ -61,15 +57,17 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="sm:w-64 w-56">
           <DropdownMenuLabel>
-            {user?.teams.length !== 0 ? (
-              user?.teams &&
-              user.teams.map((team: TeamInterface) => (
+            {teams && teams?.length !== 0 ? (
+              teams.map((team: TeamInterface) => (
                 <p
                   key={team._id}
-                  className="bg-blue-600 py-1 px-4 rounded-md text-white font-bold"
+                  className={`py-1 px-4 rounded-md font-bold my-2 cursor-pointer ${
+                    selectedTeam?._id === team._id && "bg-blue-600 text-white"
+                  }`}
+                  onClick={() => setSelectedTeam(team)}
                 >
                   {/* use dashboard context here and update value of team */}
-                  {team.name}
+                  {team.name}&apos;s Team
                 </p>
               ))
             ) : (

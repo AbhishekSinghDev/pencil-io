@@ -10,7 +10,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ user }) => {
   return (
     <div className="flex flex-col items-center justify-between h-full bg-gray-50 py-10 px-4">
-      <div>
+      <div className="w-full">
         <ChangeTeam user={user} />
       </div>
 

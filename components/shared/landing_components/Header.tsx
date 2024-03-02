@@ -76,11 +76,13 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
         {showTryButton && (
           <div className="items-center justify-center gap-2 hidden md:flex">
             {!token && (
-              <Button variant="outline" asChild size="sm">
-                <Link href="/login">Log in</Link>
-              </Button>
+              <>
+                <Button variant="outline" asChild size="sm">
+                  <Link href="/login">Log in</Link>
+                </Button>
+                <Button size="sm">Try Pencil -{">"}</Button>
+              </>
             )}
-            <Button size="sm">Try Pencil -{">"}</Button>
             <ModeToggle />
           </div>
         )}

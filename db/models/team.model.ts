@@ -1,5 +1,6 @@
 import mongoose, { Document, models } from "mongoose";
 import { ProjectInterface } from "./project.model";
+import { UserInterface } from "./user.model";
 
 export interface TeamInterface extends Document {
   _id: string;
@@ -8,6 +9,7 @@ export interface TeamInterface extends Document {
   updatedAt: Date;
   owner: string;
   projects: ProjectInterface[];
+  members: UserInterface[];
 }
 
 const TeamScehma: mongoose.Schema = new mongoose.Schema(

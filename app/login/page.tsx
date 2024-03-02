@@ -21,9 +21,11 @@ import axios, { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/context/AuthenticationContext";
 
 const Login = () => {
   const router = useRouter();
+  const { token } = useAuth();
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -39,7 +41,7 @@ const Login = () => {
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        router.push("/dashboard");
+        location.href = "/dashboard";
         return;
       }
       toast.error("server unavailable");
@@ -53,6 +55,11 @@ const Login = () => {
       toast.error("something went wrong");
     }
   };
+
+  if (token) {
+    router.push("/");
+    return;
+  }
 
   return (
     <>

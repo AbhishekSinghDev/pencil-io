@@ -22,9 +22,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import { signupFormSchema } from "@/lib/form-schemas/signup.schema";
+import { useAuth } from "@/components/context/AuthenticationContext";
 
 const Signup = () => {
   const router = useRouter();
+  const { token } = useAuth();
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -41,7 +43,9 @@ const Signup = () => {
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        router.push("/dashboard");
+        setTimeout(() => {
+          location.href = "/dashboard";
+        }, 1000);
         return;
       }
       toast.error("server unavailable");
@@ -55,6 +59,11 @@ const Signup = () => {
       toast.error("something went wrong");
     }
   };
+
+  if (token) {
+    router.push("/");
+    return;
+  }
 
   return (
     <>

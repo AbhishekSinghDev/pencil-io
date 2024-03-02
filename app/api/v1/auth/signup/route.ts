@@ -1,4 +1,5 @@
 import connectToDatabase from "@/db/connectDatabase";
+import Team from "@/db/models/team.model";
 import User from "@/db/models/user.model";
 import { handleApiError } from "@/lib/error";
 import generateToken from "@/lib/jwt/generateToken";
@@ -54,7 +55,13 @@ export const POST = async (req: Request) => {
       password: password,
     });
 
+    const newTeam = new Team({
+      name: username,
+      owner: newUser._id,
+    });
+
     const user = await newUser.save();
+    await newTeam.save();
     const token = generateToken(user);
 
     return new Response(
