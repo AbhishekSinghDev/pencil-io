@@ -5,7 +5,8 @@ export interface ProjectInterface extends Document {
   createdAt: Date;
   updatedAt: Date;
   team: string;
-  data: string;
+  canvasData: String;
+  editorData: String;
   name: string;
   createdBy: string;
 }
@@ -14,7 +15,8 @@ const ProjectSchema: mongoose.Schema = new mongoose.Schema(
   {
     name: { type: String, default: "untitled" },
     team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
-    data: { type: String, default: "" },
+    editorData: { type: String, default: "" },
+    canvasData: { type: String, default: "" },
     createdBy: { type: String },
   },
   { timestamps: true }

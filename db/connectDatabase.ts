@@ -13,7 +13,6 @@ const connectToDatabase = async () => {
     cached.promise ||
     mongoose.connect(MONGODB_URI, {
       dbName: "pencil-io",
-      bufferCommands: false,
     });
 
   cached.conn = await cached.promise;

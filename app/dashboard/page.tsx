@@ -2,11 +2,6 @@
 
 import { useAuth } from "@/components/context/AuthenticationContext";
 import Sidebar from "@/components/shared/dashboard_components/Sidebar";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { UserInterface } from "@/db/models/user.model";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -15,11 +10,12 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import DashboardNavbar from "@/components/shared/dashboard_components/DashboardNavbar";
 import FileTable from "@/components/shared/dashboard_components/FileTable";
+import Loading from "@/components/shared/Loading";
 
 const Dashboard = () => {
   const router = useRouter();
   const [user, setUser] = useState<UserInterface | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
   const { token } = useAuth();
 
@@ -55,7 +51,7 @@ const Dashboard = () => {
   }, [token]);
 
   if (isLoading) {
-    return <p>Loading..</p>;
+    return <Loading />;
   }
 
   if (isError) {

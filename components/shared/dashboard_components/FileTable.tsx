@@ -11,8 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useDashboard } from "@/components/context/DashboardContext";
+import { useRouter } from "next/navigation";
 
 const FileTable = () => {
+  const router = useRouter();
   const { selectedTeam } = useDashboard();
   const projects = selectedTeam?.projects;
 
@@ -30,7 +32,11 @@ const FileTable = () => {
         <TableBody>
           {projects?.length !== 0 && projects ? (
             projects.map((project) => (
-              <TableRow key={project._id}>
+              <TableRow
+                key={project._id}
+                onClick={() => router.push(`/workspace/${project._id}`)}
+                className="cursor-pointer"
+              >
                 <TableCell className="font-medium">{project.name}</TableCell>
                 <TableCell>
                   {new Date(project.createdAt).toDateString()}

@@ -22,7 +22,7 @@ export const POST = async (req: Request) => {
 
     // check for email exists or not
     const isUserExists = await User.findOne({ email: email });
-    if (isUserExists !== null && Object.keys(isUserExists).length === 0) {
+    if (isUserExists === null || Object.keys(isUserExists).length === 0) {
       return new Response(
         JSON.stringify({
           success: false,

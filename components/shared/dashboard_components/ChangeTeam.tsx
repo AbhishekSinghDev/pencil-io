@@ -28,6 +28,14 @@ interface ChangeTeamProps {
 
 const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
   const { setSelectedTeam, selectedTeam, teams } = useDashboard();
+  const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      location.href = "/";
+    } catch (err) {
+      alert("unable to logout");
+    }
+  };
 
   return (
     <>
@@ -91,15 +99,21 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
               />
               <p className="text-sm font-medium">Settings</p>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-2">
-              <Image
-                alt="profile"
-                src={LogoutIcon}
-                height={40}
-                width={40}
-                className="h-4 w-4"
-              />
-              <p className="text-sm font-medium">Logout</p>
+            <DropdownMenuItem
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={logout}
+              asChild
+            >
+              <div>
+                <Image
+                  alt="profile"
+                  src={LogoutIcon}
+                  height={40}
+                  width={40}
+                  className="h-4 w-4"
+                />
+                <p className="text-sm font-medium">Logout</p>
+              </div>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
