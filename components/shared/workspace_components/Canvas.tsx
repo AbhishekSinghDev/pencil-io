@@ -1,13 +1,10 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import { MainMenu, WelcomeScreen } from "@excalidraw/excalidraw";
 
 import logo from "@/public/icons/logo-1.svg";
 import clickIcon from "@/public/icons/click.svg";
 import Image from "next/image";
-import axiosInstance from "@/lib/axios_instance";
 import WorkspaceLoading from "../WorkspaceLoading";
 
 const Excalidraw = dynamic(
@@ -18,39 +15,22 @@ const Excalidraw = dynamic(
 );
 
 interface CanvasProps {
-  project_id: string;
   canvasData?: string;
   setCanvasData: (e: any) => void;
+  initialCanvas: string | null;
+  isSavingData: boolean;
 }
 
-const Canvas: React.FC<CanvasProps> = ({ project_id, setCanvasData }) => {
-  const [initialCanvas, setInitialCanvas] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const Canvas: React.FC<CanvasProps> = ({
+  setCanvasData,
+  initialCanvas,
+  isSavingData,
+}) => {
+  if (initialCanvas === null) {
+    return <WorkspaceLoading />;
+  }
 
-  useEffect(() => {
-    const fetchCanvasData = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await axiosInstance.post(
-          "api/v1/project/project-details",
-          { canvasID: project_id }
-        );
-
-        if (data.success) {
-          setInitialCanvas(data.canvasData);
-          console.log(data.canvasData);
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCanvasData();
-  }, [project_id, setInitialCanvas]);
-
-  if (isLoading) {
+  if (isSavingData) {
     return <WorkspaceLoading />;
   }
 

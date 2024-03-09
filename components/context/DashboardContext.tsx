@@ -4,6 +4,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthenticationContext";
 import axios, { AxiosError } from "axios";
 import { TeamInterface } from "@/db/models/team.model";
+import Loading from "../shared/Loading";
+import ErrorPage from "../shared/Error";
 
 interface DashboardContextInterface {
   teams: Array<TeamInterface> | undefined;
@@ -29,11 +31,14 @@ export const DashboardContextProvider: React.FC<
   const [selectedTeam, setSelectedTeam] = useState<TeamInterface | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
   const { token } = useAuth();
 
   useEffect(() => {
     const fetchTeams = async () => {
       try {
+        setIsLoading(true);
         const { data } = await axios.get("api/v1/team/all-teams", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,12 +56,22 @@ export const DashboardContextProvider: React.FC<
           alert(data.message);
           return;
         }
-        alert("something went wrong");
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (token) fetchTeams();
   }, [token]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <DashboardContext.Provider

@@ -2,6 +2,7 @@ import connectToDatabase from "@/db/connectDatabase";
 import Team from "@/db/models/team.model";
 import { handleApiError } from "@/lib/error";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import Project from "@/db/models/project.model";
 import { models } from "mongoose";
 
 export const GET = async (req: Request) => {
@@ -23,6 +24,10 @@ export const GET = async (req: Request) => {
     const result_out = result as JwtPayload;
     if (result) {
       const user = result_out.user;
+      await connectToDatabase();
+
+      // don't romove this line in future whenever you comeback becoz the below problem mentioned causes on initial load
+      const project = Project.find({});
 
       //! found intresting bug before projects initializes i was trying to populate projects filed from project collection even before it created
 

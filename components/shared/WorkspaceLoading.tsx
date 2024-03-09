@@ -2,13 +2,9 @@ import React from "react";
 
 const WorkspaceLoading = () => {
   return (
-    <div
-      aria-label="Loading..."
-      role="status"
-      className="flex items-center space-x-2"
-    >
+    <div aria-label="Loading..." role="status" className="flex items-center">
       <svg
-        className="h-8 w-8 animate-spin stroke-gray-500"
+        className="h-6 w-6 animate-spin stroke-gray-500"
         viewBox="0 0 256 256"
       >
         <line
@@ -84,7 +80,7 @@ const WorkspaceLoading = () => {
           stroke-width="24"
         ></line>
       </svg>
-      <span className="text-xl font-medium text-gray-500">Saving...</span>
+      <span className="text-lg font-medium">Saving..</span>
     </div>
   );
 };
