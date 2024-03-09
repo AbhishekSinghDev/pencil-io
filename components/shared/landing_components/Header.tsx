@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
               </li>
               <li>
                 <Link
-                  href="/"
+                  href="/pricing"
                   className="lg:text-base text-sm hover:bg-orange-600 py-1 px-2 rounded-md"
                 >
                   Pricing

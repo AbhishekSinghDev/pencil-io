@@ -18,6 +18,8 @@ import Link from "next/link";
 import Loading from "@/components/shared/Loading";
 import Editor from "@/components/shared/workspace_components/Editor";
 import { Button } from "@/components/ui/button";
+import MenubarSwitch from "@/components/shared/workspace_components/NavigationDropdown";
+import NavigationDropdown from "@/components/shared/workspace_components/NavigationDropdown";
 
 const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
   const project_id = params.project_id;
@@ -83,7 +85,7 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
 
   return (
     <section className="mx-auto absolute inset-0 h-fit w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
-      <div className="w-full h-auto flex items-center justify-between py-2 border-b px-6">
+      <div className="w-full h-auto flex items-center justify-between py-2 border-b px-6 backdrop-blur-sm">
         <Link
           href="/"
           className="flex items-center justify-center gap-2 cursor-pointer"
@@ -95,7 +97,10 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
             width={100}
             className="h-6 w-6"
           />
-          <p className="text-lg font-bold">Pencil.io</p>
+          <p className="text-base font-bold">Pencil.io</p>
+          <div className="ml-2">
+            <NavigationDropdown />
+          </div>
         </Link>
         <div>
           <ul className="items-center justify-center hidden md:flex border rounded-md">

@@ -21,6 +21,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TeamInterface } from "@/db/models/team.model";
 import CreateTeamDialog from "./CreateTeamDialog";
 import { useDashboard } from "@/components/context/DashboardContext";
+import Link from "next/link";
+
+import HomeIcon from "@/public/icons/home.svg";
 
 interface ChangeTeamProps {
   user: UserInterface | undefined;
@@ -41,7 +44,7 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer hover:bg-slate-900 w-full rounded-md">
+          <div className="cursor-pointer w-full rounded-md">
             <div className="flex items-center justify-center gap-3 border rounded-md py-2">
               <Image
                 src={Logo}
@@ -132,7 +135,20 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="w-full rounded-md px-4 py-2 my-6 border flex items-center justify-start gap-2 font-bold text-sm cursor-pointer">
+      <Link
+        href="/"
+        className="w-full rounded-md px-4 py-2 mt-6 border flex items-center justify-start gap-2 font-bold text-sm cursor-pointer font-sans"
+      >
+        <Image
+          src={HomeIcon}
+          alt="home"
+          height={50}
+          width={50}
+          className="w-5 h-5 dark:invert"
+        />
+        Home
+      </Link>
+      <div className="w-full rounded-md px-4 py-2 mt-2 border flex items-center justify-start gap-2 font-bold text-sm cursor-pointer font-sans">
         <Image
           src={AllIcon}
           alt="all"

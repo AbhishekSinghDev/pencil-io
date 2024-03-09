@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -94,6 +93,9 @@ const SideNavigation = () => {
       const data: any = error.response?.data;
       if (data?.message) {
         toast.error(data.message);
+        setTimeout(() => {
+          router.push("/pricing");
+        }, 1000);
         return;
       }
       toast.error("something went wrong");
@@ -132,6 +134,7 @@ const SideNavigation = () => {
                     placeholder="file name"
                     onChange={(e) => setFileName(e.target.value)}
                     value={fileName}
+                    autoComplete="off"
                   />
                 </div>
               </div>
@@ -157,7 +160,7 @@ const SideNavigation = () => {
             <span className="font-bold">{totalFileLimit}</span> files used.
           </p>
           <p className="text-sm">
-            <Link href="/upgrade" className="underline underline-offset-4">
+            <Link href="/pricing" className="underline underline-offset-4">
               Upgrade
             </Link>{" "}
             your plan for unlimited access.
