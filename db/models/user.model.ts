@@ -6,6 +6,7 @@ export interface UserInterface extends Document {
   createdAt: Date;
   username: string;
   email: string;
+  isPremiumUser: boolean;
   teams: TeamInterface[];
 }
 

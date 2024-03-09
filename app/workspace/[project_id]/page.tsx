@@ -17,6 +17,7 @@ import WorkspaceLoading from "@/components/shared/WorkspaceLoading";
 import Link from "next/link";
 import Loading from "@/components/shared/Loading";
 import Editor from "@/components/shared/workspace_components/Editor";
+import { Button } from "@/components/ui/button";
 
 const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
   const project_id = params.project_id;
@@ -81,7 +82,7 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
   }
 
   return (
-    <section className="mx-auto h-screen">
+    <section className="mx-auto absolute inset-0 h-fit w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
       <div className="w-full h-auto flex items-center justify-between py-2 border-b px-6">
         <Link
           href="/"
@@ -97,10 +98,10 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
           <p className="text-lg font-bold">Pencil.io</p>
         </Link>
         <div>
-          <ul className="items-center justify-center hidden md:flex border rounded">
+          <ul className="items-center justify-center hidden md:flex border rounded-md">
             <li
-              className={`hover:bg-slate-200 lg:text-xs text-sm font-semibold p-1 px-2 border-r cursor-pointer ${
-                selectDocument && "bg-slate-200"
+              className={`hover:bg-gray-600 bg-opacity-30 text-sm font-semibold p-2 px-3 border-r cursor-pointer ${
+                selectDocument && "bg-gray-600"
               }`}
               onClick={() => {
                 setSelectDocument(true);
@@ -111,8 +112,8 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
               Document
             </li>
             <li
-              className={`hover:bg-slate-200 lg:text-xs text-sm font-semibold p-1 px-2 border-r cursor-pointer ${
-                selectBoth && "bg-slate-200"
+              className={`hover:bg-gray-600 bg-opacity-30 text-sm font-semibold p-2 px-3 border-r cursor-pointer ${
+                selectBoth && "bg-gray-600"
               }`}
               onClick={() => {
                 setSelectBoth(true);
@@ -123,8 +124,8 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
               Both
             </li>
             <li
-              className={`hover:bg-slate-200 lg:text-xs text-sm font-semibold p-1 px-2 cursor-pointer ${
-                selectCanvas && "bg-slate-200"
+              className={`hover:bg-gray-600 bg-opacity-30 text-sm font-semibold p-2 px-3 cursor-pointer ${
+                selectCanvas && "bg-gray-600"
               }`}
               onClick={() => {
                 setSelectDocument(false);
@@ -142,19 +143,21 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
           ) : (
             <p className="font-medium">Save status</p>
           )}
-          <div
-            onClick={saveEditor}
-            className="bg-blue-600 rounded-sm text-white flex items-center justify-center place-items-center p-1 px-3 gap-1 cursor-pointer"
-          >
-            <p className="text-sm font-bold">Save</p>
-            <Image
-              src={saveIcon}
-              alt="save"
-              height={35}
-              width={35}
-              className="h-5 w-5 invert"
-            />
-          </div>
+          <Button size="sm" asChild>
+            <div
+              onClick={saveEditor}
+              className="flex items-center justify-center place-items-center gap-1 cursor-pointer"
+            >
+              <p className="font-bold">Save</p>
+              <Image
+                src={saveIcon}
+                alt="save"
+                height={35}
+                width={35}
+                className="h-5 w-5"
+              />
+            </div>
+          </Button>
         </div>
       </div>
 

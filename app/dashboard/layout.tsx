@@ -12,10 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <DashboardContextProvider>{children}</DashboardContextProvider>
-      </body>
-    </html>
+    <section>
+      <DashboardContextProvider>{children}</DashboardContextProvider>
+    </section>
   );
 }

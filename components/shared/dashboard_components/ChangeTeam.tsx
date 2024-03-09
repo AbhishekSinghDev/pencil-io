@@ -41,8 +41,8 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer bg-slate-200 hover:bg-slate-100 w-full py-2 rounded-md">
-            <div className="flex items-center justify-center gap-3">
+          <div className="cursor-pointer hover:bg-slate-900 w-full rounded-md">
+            <div className="flex items-center justify-center gap-3 border rounded-md py-2">
               <Image
                 src={Logo}
                 alt="pencil.io"
@@ -58,7 +58,7 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
                 alt="arrow"
                 height={50}
                 width={50}
-                className="h-4 w-4"
+                className="h-4 w-4 dark:invert"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
                 src={SettingsIcon}
                 height={40}
                 width={40}
-                className="h-4 w-4"
+                className="h-4 w-4 dark:invert"
               />
               <p className="text-sm font-medium">Settings</p>
             </DropdownMenuItem>
@@ -110,7 +110,7 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
                   src={LogoutIcon}
                   height={40}
                   width={40}
-                  className="h-4 w-4"
+                  className="h-4 w-4 dark:invert"
                 />
                 <p className="text-sm font-medium">Logout</p>
               </div>
@@ -132,13 +132,13 @@ const ChangeTeam: React.FC<ChangeTeamProps> = ({ user }) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="w-full rounded-md px-4 py-2 bg-slate-100 my-6 border flex items-center justify-start gap-2 font-bold text-sm cursor-pointer">
+      <div className="w-full rounded-md px-4 py-2 my-6 border flex items-center justify-start gap-2 font-bold text-sm cursor-pointer">
         <Image
           src={AllIcon}
           alt="all"
           height={50}
           width={50}
-          className="w-4 h-4"
+          className="w-4 h-4 dark:invert"
         />
         <p>All Files</p>
       </div>

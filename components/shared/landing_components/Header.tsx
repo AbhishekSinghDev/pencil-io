@@ -36,34 +36,38 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
 
         {showLinks && (
           <>
-            <ul className="items-center justify-center gap-1 hidden md:flex">
+            <ul className="items-center justify-center gap-4 hidden md:flex">
               <li>
-                <Button variant="link" size="sm" asChild>
-                  <Link href="/" className="lg:text-base text-sm">
-                    Use cases
-                  </Link>
-                </Button>
+                <Link
+                  href="/"
+                  className="lg:text-base text-sm hover:bg-orange-600 py-1 px-2 rounded-md"
+                >
+                  UseCases
+                </Link>
               </li>
               <li>
-                <Button variant="link" size="sm" asChild>
-                  <Link href="/" className="lg:text-base text-sm">
-                    About
-                  </Link>
-                </Button>
+                <Link
+                  href="/"
+                  className="lg:text-base text-sm hover:bg-orange-600 py-1 px-2 rounded-md"
+                >
+                  About
+                </Link>
               </li>
               <li>
-                <Button variant="link" size="sm" asChild>
-                  <Link href="/" className="lg:text-base text-sm">
-                    Pricing
-                  </Link>
-                </Button>
+                <Link
+                  href="/"
+                  className="lg:text-base text-sm hover:bg-orange-600 py-1 px-2 rounded-md"
+                >
+                  Pricing
+                </Link>
               </li>
               <li>
-                <Button variant="link" size="sm" asChild>
-                  <Link href="/" className="lg:text-base text-sm">
-                    Contact
-                  </Link>
-                </Button>
+                <Link
+                  href="/"
+                  className="lg:text-base text-sm hover:bg-orange-600 py-1 px-2 rounded-md"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
 
@@ -75,12 +79,18 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
 
         {showTryButton && (
           <div className="items-center justify-center gap-2 hidden md:flex">
-            {!token && (
+            {!token ? (
               <>
                 <Button variant="outline" asChild size="sm">
                   <Link href="/login">Log in</Link>
                 </Button>
                 <Button size="sm">Try Pencil -{">"}</Button>
+              </>
+            ) : (
+              <>
+                <Button size="sm" asChild>
+                  <Link href="/dashboard">Dashboard -{">"}</Link>
+                </Button>
               </>
             )}
             <ModeToggle />

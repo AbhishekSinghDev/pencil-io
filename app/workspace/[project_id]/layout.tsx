@@ -13,9 +13,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={josefin_sans.className}>{children}</body>
-    </html>
-  );
+  return <section className={josefin_sans.className}>{children}</section>;
 }

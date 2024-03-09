@@ -64,7 +64,7 @@ const Login = () => {
   return (
     <>
       <Toaster />
-      <div className="absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] space-y-4">
+      <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
         <Header />
 
         <p className="text-4xl font-extrabold text-center mt-20">

@@ -41,7 +41,9 @@ const FileTable = () => {
                 }}
                 className="cursor-pointer"
               >
-                <TableCell className="font-medium">{project.name}</TableCell>
+                <TableCell className="font-medium line-clamp-1">
+                  {project.name}
+                </TableCell>
                 <TableCell>
                   {new Date(project.createdAt).toDateString()}
                 </TableCell>

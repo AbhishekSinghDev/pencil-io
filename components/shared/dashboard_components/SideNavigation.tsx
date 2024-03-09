@@ -6,23 +6,74 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { DialogClose } from "@radix-ui/react-dialog";
+import axiosInstance from "@/lib/axios_instance";
 
 const SideNavigation = () => {
   const [redirectLoading, setRedirectLoading] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string | undefined>();
+  const [totalFileLimit, setTotalFileLimit] = useState<number>(0);
+  const [fileLimitValue, setFileLimitValue] = useState<number>(0);
   const router = useRouter();
   const { selectedTeam } = useDashboard();
   const { token } = useAuth();
   const team_id = selectedTeam?._id;
 
+  useEffect(() => {
+    const fetchTeamDetails = async () => {
+      try {
+        const { data } = await axiosInstance.post(
+          "api/v1/team/team-details",
+          {
+            team_id: team_id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data?.success) {
+          const totalFiles = data?.team.projects.length;
+          const fileLimit = data?.team.limit;
+          setTotalFileLimit(fileLimit);
+          setFileLimitValue(totalFiles);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (team_id) fetchTeamDetails();
+  }, [team_id, token]);
+
   const handleNewFile = async () => {
+    if (fileName === undefined) {
+      toast.error("file name cannot be empty!");
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         "api/v1/project/create-project",
         {
           team_id: team_id,
+          project_name: fileName,
         },
         {
           headers: {
@@ -34,6 +85,7 @@ const SideNavigation = () => {
       if (data?.success) {
         toast.success(data.message);
         const projectID = data?.project._id;
+        setFileLimitValue(data.length);
         router.push(`/workspace/${projectID}`);
         setRedirectLoading(true);
       }
@@ -62,18 +114,47 @@ const SideNavigation = () => {
         )}
 
         <Button className="w-full" asChild>
-          <p
-            className="flex items-center justify-center gap-4 cursor-pointer"
-            onClick={handleNewFile}
-          >
-            New File <span className="text-gray-400 text-xs">Alt N</span>
-          </p>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-full">New File</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Create new file</DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center space-x-2">
+                <div className="grid flex-1 gap-2">
+                  <Label htmlFor="link" className="sr-only">
+                    Link
+                  </Label>
+                  <Input
+                    id="link"
+                    placeholder="file name"
+                    onChange={(e) => setFileName(e.target.value)}
+                    value={fileName}
+                  />
+                </div>
+              </div>
+              <DialogFooter className="sm:justify-start">
+                <DialogClose asChild>
+                  <div className="flex gap-2 items-center justify-center">
+                    <Button type="button" onClick={handleNewFile}>
+                      Create
+                    </Button>
+                    <Button type="button" variant="secondary">
+                      Close
+                    </Button>
+                  </div>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </Button>
         <div className="space-y-2">
-          <Progress value={40} />
+          <Progress value={fileLimitValue * 20} />
           <p className="text-sm">
-            <span className="font-bold">2</span> out of{" "}
-            <span className="font-bold">5</span> files used.
+            <span className="font-bold">{fileLimitValue}</span> out of{" "}
+            <span className="font-bold">{totalFileLimit}</span> files used.
           </p>
           <p className="text-sm">
             <Link href="/upgrade" className="underline underline-offset-4">

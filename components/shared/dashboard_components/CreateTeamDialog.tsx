@@ -60,13 +60,13 @@ const CreateTeamDialog = () => {
       <Toaster />
       <Dialog>
         <DialogTrigger asChild>
-          <div className="relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 gap-2 cursor-pointer hover:bg-slate-100">
+          <div className="relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 gap-2 cursor-pointer">
             <Image
               alt="profile"
               src={TeamIcon}
               height={40}
               width={40}
-              className="h-4 w-4"
+              className="h-4 w-4 dark:invert"
             />
             <p className="text-sm font-medium">Create Team</p>
           </div>

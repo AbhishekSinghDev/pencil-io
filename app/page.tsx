@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/components/context/AuthenticationContext";
 import Header from "@/components/shared/landing_components/Header";
@@ -10,18 +9,13 @@ import { Button } from "@/components/ui/button";
 import DemoImage from "@/public/images/demo.webp";
 import Image from "next/image";
 import Footer from "@/components/shared/landing_components/Footer";
+import Link from "next/link";
 
 const Main = () => {
   const { token } = useAuth();
-  const router = useRouter();
-
-  if (token) {
-    router.push("/dashboard");
-    return;
-  }
 
   return (
-    <section className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] h-fit">
+    <section className="absolute inset-0 h-fit w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
       <Header showLinks={true} showTryButton={true} />
       <section className="h-[50lvh] flex flex-col items-center justify-center space-y-6 max-w-screen-xl mx-auto">
         <div className="text-center">
@@ -37,9 +31,14 @@ const Main = () => {
           </p>
         </div>
 
-        <Button>Try Pencil -{">"}</Button>
+        {token ? (
+          <Button asChild>
+            <Link href="/dashboard">Dashboard -{">"}</Link>
+          </Button>
+        ) : (
+          <Button>Try Pencil -{">"}</Button>
+        )}
       </section>
-
       <section className="grid place-items-center px-6 max-w-screen-xl mx-auto">
         <Image
           src={DemoImage}
@@ -49,7 +48,6 @@ const Main = () => {
           className="h-auto w-auto"
         />
       </section>
-
       <section className="max-w-screen-xl mx-auto">
         <Footer />
       </section>

@@ -62,6 +62,11 @@ export const POST = async (req: Request) => {
 
     const user = await newUser.save();
     await newTeam.save();
+
+    await User.findByIdAndUpdate(newUser._id, {
+      $push: { teams: newTeam._id },
+    });
+
     const token = generateToken(user);
 
     return new Response(
