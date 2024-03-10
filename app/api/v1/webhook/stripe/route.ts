@@ -13,38 +13,31 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, {
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 // make sure to add this, otherwise throws a error of stream.not.readable error => nextjs specific only
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export const POST = async (req: Request) => {
   try {
-    console.log("req-headers", req.headers);
-
     if (req.method !== "POST") {
       return new Response("only post requests allowed");
     }
 
     const sig: any = req.headers.get("stripe-signature");
-    // const rawBody = await getRawBody(req.body);
     const rawBody = await req.text();
 
     let event;
 
     try {
       event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
-      // console.log(event);
     } catch (err: any) {
       {
-        // return res.status(400).send(`Webhook Error: ${err.message}`);
         console.log("Webhook error: ", err);
         return new Response(`Webhook Error: ${err.message}`, { status: 400 });
       }
     }
-
-    console.log("event-type", JSON.stringify(event.type));
 
     if (event.type === "checkout.session.completed") {
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
