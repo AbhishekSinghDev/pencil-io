@@ -17,6 +17,7 @@ const UserSchema: mongoose.Schema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     teams: [{ type: mongoose.Schema.Types.ObjectId, ref: "Team" }],
     isPremiumUser: { type: Boolean, default: false },
+    stripeId: { type: String },
   },
   { timestamps: true }
 );
