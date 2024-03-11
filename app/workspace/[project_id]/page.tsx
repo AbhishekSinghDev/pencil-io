@@ -18,8 +18,6 @@ import Link from "next/link";
 import Loading from "@/components/shared/Loading";
 import Editor from "@/components/shared/workspace_components/Editor";
 import { Button } from "@/components/ui/button";
-import MenubarSwitch from "@/components/shared/workspace_components/NavigationDropdown";
-import NavigationDropdown from "@/components/shared/workspace_components/NavigationDropdown";
 
 const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
   const project_id = params.project_id;
@@ -98,9 +96,6 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
             className="h-6 w-6"
           />
           <p className="text-base font-bold">Pencil.io</p>
-          <div className="ml-2">
-            <NavigationDropdown />
-          </div>
         </Link>
         <div>
           <ul className="items-center justify-center hidden md:flex border rounded-md">
@@ -143,6 +138,15 @@ const ProjectWorkspace = ({ params }: { params: { project_id: string } }) => {
           </ul>
         </div>
         <div className="flex items-center justify-center gap-4">
+          <ul className="flex items-center justify-center gap-2">
+            <Button size="sm" className="text-xs font-medium" asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
+            <Button size="sm" className="text-xs font-medium">
+              Export Doc
+            </Button>
+          </ul>
+
           {isSavingData ? (
             <WorkspaceLoading />
           ) : (

@@ -31,7 +31,7 @@ export const DashboardContextProvider: React.FC<
   const [selectedTeam, setSelectedTeam] = useState<TeamInterface | undefined>(
     undefined
   );
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const { token } = useAuth();
 

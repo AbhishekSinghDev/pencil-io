@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { useDashboard } from "@/components/context/DashboardContext";
 import { useRouter } from "next/navigation";
+import CircularLoading from "../CircularLoading";
 
 const FileTable = () => {
   const [redirectLoading, setRedirectLoading] = useState<boolean>(false);
@@ -62,9 +63,9 @@ const FileTable = () => {
       </Table>
 
       {redirectLoading && (
-        <div className="flex items-center justify-center gap-2 my-4">
-          <div className="rounded-md h-6 w-6 border-4 border-t-4 border-blue-500 animate-spin"></div>
-          <p className="font-bold text-lg animate-pulse">
+        <div className="flex items-center justify-center gap-4 my-4">
+          <CircularLoading />
+          <p className="font-bold text-xl animate-pulse">
             Initializing Workspace
           </p>
         </div>

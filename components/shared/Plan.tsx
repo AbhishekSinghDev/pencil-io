@@ -3,10 +3,12 @@
 import axiosInstance from "@/lib/axios_instance";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthenticationContext";
+import CircularLoading from "./CircularLoading";
 
 const Plan = () => {
   const { token } = useAuth();
   const [isPremiumUser, setIsPremiumUser] = useState<boolean>(false);
+  const [loadingPrice, setLoadingPrice] = useState<boolean>(true);
   const [plans, setPlans] = useState<any>();
 
   useEffect(() => {
@@ -24,7 +26,8 @@ const Plan = () => {
 
         // console.log(data);
         if (data.success) {
-          setIsPremiumUser(true);
+          const isPUser: boolean = data.user.isPremiumUser as boolean;
+          setIsPremiumUser(isPUser);
         }
       } catch (err) {
         console.log(err);
@@ -37,6 +40,7 @@ const Plan = () => {
   useEffect(() => {
     const fetchPlan = async () => {
       try {
+        setLoadingPrice(true);
         const { data } = await axiosInstance.get("api/v1/get-plans");
 
         if (data.success) {
@@ -44,6 +48,8 @@ const Plan = () => {
         }
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoadingPrice(false);
       }
     };
 
@@ -88,19 +94,21 @@ const Plan = () => {
           Most popular
         </p>
       </div>
-      <p className="mt-4 text-sm leading-6 text-gray-300">
-        BILLED ANNUALLY or ₹ 50 MONTHLY
-      </p>
-      <p className="mt-8 flex items-baseline gap-x-1">
-        <span className="text-4xl font-bold tracking-tight text-white">
-          {plans?.unit_amount &&
+      <p className="mt-4 text-sm leading-6 text-gray-300">BILLED ANNUALLY</p>
+      <div className="mt-8 flex items-baseline gap-x-1">
+        <div className="text-4xl font-bold tracking-tight text-white">
+          {loadingPrice ? (
+            <CircularLoading />
+          ) : (
+            plans?.unit_amount &&
             (plans.unit_amount / 100).toLocaleString("en-US", {
               style: "currency",
               currency: "INR",
-            })}
-        </span>
+            })
+          )}
+        </div>
         <span className="text-sm font-semibold leading-6 text-gray-300"></span>
-      </p>
+      </div>
       {isPremiumUser ? (
         <>
           <a
@@ -138,7 +146,7 @@ const Plan = () => {
               clip-rule="evenodd"
             ></path>
           </svg>
-          unlimited files
+          100 files
         </li>
         <li className="flex gap-x-3">
           <svg

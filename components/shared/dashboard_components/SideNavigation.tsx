@@ -21,10 +21,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import axiosInstance from "@/lib/axios_instance";
+import CircularLoading from "../CircularLoading";
 
 const SideNavigation = () => {
   const [redirectLoading, setRedirectLoading] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string | undefined>();
+  const [isPremiumUser, setIsPremiumUser] = useState<boolean>(false);
   const [totalFileLimit, setTotalFileLimit] = useState<number>(0);
   const [fileLimitValue, setFileLimitValue] = useState<number>(0);
   const router = useRouter();
@@ -60,6 +62,30 @@ const SideNavigation = () => {
 
     if (team_id) fetchTeamDetails();
   }, [team_id, token]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await axiosInstance.post(
+          "api/v1/auth/who",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (data.success) {
+          setIsPremiumUser(data.user.isPremiumUser);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (token) fetchUser();
+  }, [token]);
 
   const handleNewFile = async () => {
     if (fileName === undefined) {
@@ -107,8 +133,8 @@ const SideNavigation = () => {
       <Toaster />
       <div className="w-full space-y-4">
         {redirectLoading && (
-          <div className="flex items-center justify-start gap-2">
-            <div className="rounded-md h-6 w-6 border-4 border-t-4 border-blue-500 animate-spin"></div>
+          <div className="flex items-center justify-start gap-3">
+            <CircularLoading />
             <p className="font-bold text-lg animate-pulse">
               Initializing Workspace
             </p>
@@ -154,17 +180,33 @@ const SideNavigation = () => {
           </Dialog>
         </Button>
         <div className="space-y-2">
-          <Progress value={fileLimitValue * 20} />
-          <p className="text-sm">
-            <span className="font-bold">{fileLimitValue}</span> out of{" "}
-            <span className="font-bold">{totalFileLimit}</span> files used.
-          </p>
-          <p className="text-sm">
-            <Link href="/pricing" className="underline underline-offset-4">
-              Upgrade
-            </Link>{" "}
-            your plan for unlimited access.
-          </p>
+          {!isPremiumUser ? (
+            <>
+              <Progress value={fileLimitValue * 20} />
+              <p className="text-sm">
+                <span className="font-bold">{fileLimitValue}</span> out of{" "}
+                <span className="font-bold">{totalFileLimit}</span> files used.
+              </p>
+            </>
+          ) : (
+            <>
+              <Progress value={fileLimitValue} />
+              <p className="text-sm">
+                <span className="font-bold">{fileLimitValue}</span> out of{" "}
+                <span className="font-bold">{totalFileLimit}</span> files used.
+              </p>
+            </>
+          )}
+          {!isPremiumUser ? (
+            <p className="text-sm">
+              <Link href="/pricing" className="underline underline-offset-4">
+                Upgrade
+              </Link>{" "}
+              your plan for unlimited access.
+            </p>
+          ) : (
+            <p>Current plan: Professional</p>
+          )}
         </div>
       </div>
     </>

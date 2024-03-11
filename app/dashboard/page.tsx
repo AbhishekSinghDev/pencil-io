@@ -3,7 +3,6 @@
 import { useAuth } from "@/components/context/AuthenticationContext";
 import Sidebar from "@/components/shared/dashboard_components/Sidebar";
 import { UserInterface } from "@/db/models/user.model";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,11 +10,12 @@ import { useRouter } from "next/navigation";
 import DashboardNavbar from "@/components/shared/dashboard_components/DashboardNavbar";
 import FileTable from "@/components/shared/dashboard_components/FileTable";
 import Loading from "@/components/shared/Loading";
+import axiosInstance from "@/lib/axios_instance";
 
 const Dashboard = () => {
   const router = useRouter();
   const [user, setUser] = useState<UserInterface | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const { token } = useAuth();
 
@@ -23,7 +23,7 @@ const Dashboard = () => {
     const fetchUser = async () => {
       try {
         setIsLoading(true);
-        const { data } = await axios.post(
+        const { data } = await axiosInstance.post(
           "api/v1/auth/who",
           {},
           {
