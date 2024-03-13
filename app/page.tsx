@@ -36,7 +36,7 @@ const Main = () => {
             <Link href="/dashboard">Dashboard -{">"}</Link>
           </Button>
         ) : (
-          <Button asChild><Link href="/">Try Pencil -{">"}</Link></Button>
+          <Button asChild><Link href="/login">Try Pencil -{">"}</Link></Button>
         )}
       </section>
       <section className="grid place-items-center px-6 max-w-screen-xl mx-auto">
