@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ showLinks, showTryButton }) => {
                 <Button variant="outline" asChild size="sm">
                   <Link href="/login">Log in</Link>
                 </Button>
-                <Button size="sm">Try Pencil -{">"}</Button>
+                <Button size="sm" asChild><Link href="/">Try Pencil -{">"}</Link></Button>
               </>
             ) : (
               <>
